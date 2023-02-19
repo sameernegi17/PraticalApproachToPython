@@ -6,6 +6,11 @@ in groups based on the value of a particular field, such as date.
 
 """
 
+from operator import itemgetter
+from itertools import groupby
+
+
+
 rows = [
     {"address": "5412 N CLARK", "date": "07/01/2012"},
     {"address": "5148 N CLARK", "date": "07/04/2012"},
@@ -17,3 +22,17 @@ rows = [
     {"address": "1039 W GRANVILLE", "date": "07/04/2012"},
 ]
 
+rows.sort(key=itemgetter("date"))
+
+for date,items in groupby(rows,key=itemgetter("date")):
+    print(date)
+    for i in items:
+        print(" ", i)
+
+from collections import defaultdict
+rows_by_date = defaultdict(list)
+for row in rows:
+   rows_by_date[row['date']].append(row)
+
+
+print(rows_by_date)
